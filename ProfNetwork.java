@@ -529,7 +529,7 @@ if(rowCount==0)
       String query7=String.format("SELECT B.name FROM CONNECTION_USR A,USR B WHERE A.connectionId='%s' AND A.userId=B.userId AND A.status='Accept' ",currentuser);
       int row  =   esql.executeQueryAndPrintResult(query);
        System.out.println("and accpeted friend(accept friend request)(test for insertion):");
-      int row6 = esql.executeQueryAndPrintResult(query);
+      int row6 = esql.executeQueryAndPrintResult(query7);
      // esql.executeQueryAndReturnResult(query);
       if(row==0)
       {
