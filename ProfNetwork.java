@@ -316,6 +316,7 @@ public class ProfNetwork {
       }//end try
    }//end main
 public static void UpdateProfile(ProfNetwork esql){
+   
 }
     public static void ViewMessages(ProfNetwork esql,String currentuser){
           try{
@@ -531,7 +532,7 @@ if(rowCount==0)
        System.out.println("and accpeted friend(accept friend request)(test for insertion):");
       int row6 = esql.executeQueryAndPrintResult(query7);
      // esql.executeQueryAndReturnResult(query);
-      if(row==0)
+      if(row==0 && row6==0)
       {
          System.out.println("you don't have any friend");
       }
@@ -769,7 +770,7 @@ String request=in.readLine();
             //  System.out.println("\t2");
                String levelB=i;
               //    System.out.println("\t2");
-                String query2 = String.format("SELECT CONNECTION_USR.connectionId  FROM CONNECTION_USR WHERE CONNECTION_USR.userId='%s' AND CONNECTION_USR.status='Accept'",levelB);
+                String query2 = String.format("SELECT CONNECTION_USR.connectionId  FROM CONNECTION_USR WHERE CONNECTION_USR.userId='%s' AND CONNECTION_USR.status='Accept' UNION SELECT CONNECTION_USR.userId  FROM CONNECTION_USR WHERE CONNECTION_USR.connectionId='%s' AND CONNECTION_USR.status='Accept'",levelB,levelB);
               //  System.out.println(i);
                //   System.out.println("\t2");
                 List<List<String>> checker2=esql.executeQueryAndReturnResult(query2);
@@ -802,7 +803,7 @@ String request=in.readLine();
                  //    System.out.println("\t5");
                 String levelC=m;
             //      System.out.println("\t5");
-                       String query3 = String.format("SELECT CONNECTION_USR.connectionId  FROM CONNECTION_USR WHERE CONNECTION_USR.userId='%s' AND CONNECTION_USR.status='Accept'",levelC);
+                       String query3 = String.format("SELECT CONNECTION_USR.connectionId  FROM CONNECTION_USR WHERE CONNECTION_USR.userId='%s' AND CONNECTION_USR.status='Accept' UNION SELECT CONNECTION_USR.userId  FROM CONNECTION_USR WHERE CONNECTION_USR.connectionId='%s' AND CONNECTION_USR.status='Accept'",levelC,levelC);
                  //      System.out.println(levelB);
                 //       System.out.println("\t5");
                 List<List<String>> checker3=esql.executeQueryAndReturnResult(query3);
@@ -811,19 +812,19 @@ String request=in.readLine();
              //     System.out.println("\t5");
                   if(rowCoun3>0)
                   {//row 3
-                     for (int e = 0; e < checker3.size(); e++) {//6
+                     for (List<String> innerlist3 : checker3) {//6
               //         System.out.println("\tloop 1");
-                      for (int r = 0; r < checker3.get(e).size(); r++) {//7
-                if(request.equals(checker3.get(e).get(r))) 
+                      for (String V : innerlist3) {//7
+                if(request.equals(V)) 
                 {//if
               //   System.out.println("\tloop 888");
-                      System.out.println(m);
+                      System.out.println(V);
              if(note==0)
              {
-                 String add1 =String.format("INSERT INTO CONNECTION_USR (userId,connectionId,status) VALUES('%s','%s','Request')",currentuser,request);
+                 String add2 =String.format("INSERT INTO CONNECTION_USR (userId,connectionId,status) VALUES('%s','%s','Request')",currentuser,request);
                //  System.out.println("\tadded");
                // queryend=String.format("INSERT INTO CONNECTION_USR (userId,connectionId, status) VALUES ('%s','%s','%s')", currentuser, request);
-                esql.executeUpdate(add1);
+                esql.executeUpdate(add2);
                 note=1;
                  break;
              }
